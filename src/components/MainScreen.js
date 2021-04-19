@@ -1,21 +1,30 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { State } from "react-native-gesture-handler";
 import Card from "../styles/styleComponents/Card";
 import Screen1 from "./Screen1";
-import Screen2 from "./Screen2"
+import Screen2 from "./Screen2";
+import { connect } from "react-redux";
+import PushTryBtn from "../store/actions/pushTryBtn";
+import FinishScreen from "../components/FinishScreen"
 
-const Main = () => {
+const Main = (props) => {
+    console.log(props.all)
 
-    const [value, setValue] = useState(0);
+    let screen = <Text>Default screen</Text>;
+    let value = props.count.count
+    console.log(value)
 
-    let screen = "";
-
-    if (value === 0) {screen = <Text>Default screen</Text>} else if  (value%2 == 0) {screen = <Screen1/>} else {screen = <Screen2/>}
+    if (value == null) {screen = <Text>Default screen</Text>} else if  (value%2 == 0) {screen = <Screen1/>} else {screen = <Screen2/>}
 
     const onChange = () => {
-        setValue((value)=>value+1)
+        let data = value+1;
+        props.PushTryBtnFn(data);
     }
+
+    const getFinish = () => {
+
+    }
+
 
     return (
         <View style={styled.conteiner}>
@@ -25,7 +34,10 @@ const Main = () => {
                     {screen}
                     <TouchableOpacity onPress={onChange}>
                         <Text style={styled.btn}>Push to try!</Text>
-                        <Text>{value}</Text>
+                    </TouchableOpacity>
+                    <Text>{value}</Text>
+                    <TouchableOpacity onPress={getFinish}>
+                        <Text style={styled.btn}>Finish it!</Text>
                     </TouchableOpacity>
                 </View>
             </Card>
@@ -33,7 +45,18 @@ const Main = () => {
     )
 }
 
-export default Main
+const mapStateToProps = (state) => ({
+    all:state,
+    count: state.count
+  })
+
+  const mapDispatchToProps = (dispatch)=> {
+    return {
+        PushTryBtnFn: (data) => dispatch(PushTryBtn(data)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main)
 
 const styled = StyleSheet.create({
     conteiner:{
