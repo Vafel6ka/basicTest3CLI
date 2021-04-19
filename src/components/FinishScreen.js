@@ -7,7 +7,7 @@ const FinishScreen = () => {
         <View style={styled.conteiner}>
             <Card>
                 <Text style={styled.title}>Great! You did it!</Text>
-                <Image/>
+                <Image source={require('../assets/img/dino600.png')} />
             </Card>
         </View>
     )

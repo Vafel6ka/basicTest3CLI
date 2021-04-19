@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import Card from "../styles/styleComponents/Card";
 import Screen1 from "./Screen1";
 import Screen2 from "./Screen2";
@@ -19,6 +19,7 @@ const Main = (props) => {
     const onChange = () => {
         let data = value+1;
         props.PushTryBtnFn(data);
+        if (data > 10) Alert.alert({title: "Great!"}, {message: "You do it so long!"}, {buttons:"Ok"})
     }
 
     const getFinish = () => {
@@ -41,6 +42,7 @@ const Main = (props) => {
                     </TouchableOpacity>
                 </View>
             </Card>
+                <FinishScreen/>
         </View>
     )
 }
