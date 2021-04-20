@@ -14,18 +14,36 @@ const Main = (props) => {
     let value = props.count.count
     console.log(value)
 
-    if (value == null) {screen = <Text>Default screen</Text>} else if  (value%2 == 0) {screen = <Screen1/>} else {screen = <Screen2/>}
+    if (value == null) {screen = <Text>Default screen</Text>} 
+        else if  (value%2 == 0) {screen = <Screen1/>} 
+            else if  (value%2 != 0) {screen = <Screen2/>} 
+
+    if (value == "finish") {screen = <FinishScreen/>}
 
     const onChange = () => {
         let data = value+1;
         props.PushTryBtnFn(data);
-        if (data > 10) Alert.alert({title: "Great!"}, {message: "You do it so long!"}, {buttons:"Ok"})
+        if (data > 10) Alert.alert(
+            'Alert Title',
+            'My Alert Msg',
+            [
+              {text: 'Do something else', onPress: () => console.log('Do something pressed')},
+              {
+                text: 'Cancel',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+              },
+              {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ],
+            {cancelable: false},
+          );
     }
 
     const getFinish = () => {
-
+        let data = value;
+        data = "finish";
+        props.PushTryBtnFn(data);
     }
-
 
     return (
         <View style={styled.conteiner}>
@@ -42,7 +60,6 @@ const Main = (props) => {
                     </TouchableOpacity>
                 </View>
             </Card>
-                <FinishScreen/>
         </View>
     )
 }
